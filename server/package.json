@@ -1,0 +1,42 @@
+{
+  "name": "tac-server",
+  "version": "0.0.1",
+  "description": "Server and API for TAC Scholarship portal",
+  "main": "index.js",
+  "author": "Dev Michael LLC",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "dev": "nodemon dist/index.js",
+    "start": "node dist/index.js",
+    "typeorm:gen": "typeorm migration:generate -n",
+    "typeorm:migrun": "typeorm migration:run"  
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/morgan": "^1.9.3",
+    "@types/node": "^17.0.21",
+    "@types/randomstring": "^1.1.8",
+    "@types/uuid": "^8.3.4",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.6.0",
+    "typescript": "^4.6.2"
+  },
+  "dependencies": {
+    "apollo-server-express": "^3.6.3",
+    "argon2": "^0.28.5",
+    "dotenv": "^16.0.0",
+    "dotenv-safe": "^8.2.0",
+    "express": "^4.17.3",
+    "graphql": "^15.3.0",
+    "pg": "^8.7.3",
+    "randomstring": "^1.2.2",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.1",
+    "typeorm": "^0.2.45",
+    "uuid": "^8.3.2"
+  }
+}

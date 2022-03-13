@@ -1,0 +1,38 @@
+
+Table - fields
+USER
+- surname
+- other names
+- date of birth
+- email address
+- phone number
+- gender
+- state of origin
+- lga of origin
+- guarantor name
+- guarantor phone number
+- passport photo
+- about
+- location
+- guarantor address
+- paymentConfirmed
+- school name
+- course name
+- amount paid
+- active - true [default]
+
+SCHOOLS
+- school name
+- courses
+- school fees
+- location
+- number of students
+- typeofschool - university,college..
+- duration
+
+
+COURSES
+- course name
+- school offering it
+- number of students
+- duration
