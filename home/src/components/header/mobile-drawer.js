@@ -8,28 +8,23 @@ import { Link } from 'react-scroll';
 import {
   FaFacebookF,
   FaTwitter,
-  FaGithubAlt,
-  FaDribbble,
+  FaTelegram,
 } from 'react-icons/fa';
 import menuItems from './header.data';
 
 const social = [
   {
-    path: '/',
+    path: 'https://facebook.com/meetagape',
     icon: <FaFacebookF />,
   },
   {
-    path: '/',
+    path: 'https://twitter.com/theafternoonchurch',
     icon: <FaTwitter />,
   },
   {
-    path: '/',
-    icon: <FaGithubAlt />,
-  },
-  {
-    path: '/',
-    icon: <FaDribbble />,
-  },
+    path: 'https://t.me/theafternoonchurch',
+    icon: <FaTelegram />,
+  }
 ];
 
 const MobileDrawer = () => {

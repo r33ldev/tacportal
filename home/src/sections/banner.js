@@ -5,32 +5,20 @@ import React, { useState } from 'react';
 import ModalVideo from 'react-modal-video';
 import { Link } from 'components/link';
 import { FaPlayCircle } from 'react-icons/fa';
-import BannerBG from 'assets/bannerBg.png';
-import BannerThumb from 'assets/banner-thumb.png';
+import BannerBG from 'assets/bannerBg3.jpg';
+import BannerThumb from 'assets/banner-thumb1.png';
 
-import client1 from 'assets/sponsor/paypal.svg';
-import client2 from 'assets/sponsor/google.svg';
-import client3 from 'assets/sponsor/dropbox.svg';
+import client1 from 'assets/sponsor/taclogo.png';
+// import client1 from 'assets/sponsor/paypal.svg';
+
 
 const data = [
   {
     id: 1,
-    path: '#',
+    path: 'https://theafternoonchurch.org',
     image: client1,
-    title: 'paypal',
-  },
-  {
-    id: 2,
-    path: '#',
-    image: client2,
-    title: 'google',
-  },
-  {
-    id: 3,
-    path: '#',
-    image: client3,
-    title: 'dropbox',
-  },
+    title: 'TAC',
+  }
 ];
 
 export default function Banner() {
@@ -44,31 +32,26 @@ export default function Banner() {
       <Container sx={styles.banner.container}>
         <Box sx={styles.banner.contentBox}>
           <Heading as="h1" variant="heroPrimary">
-            Experience your ultimate mobile application
+            Online Portal for The Afternoon Church scholarship
           </Heading>
           <Text as="p" variant="heroSecondary">
-            Get your blood tests delivered at let home collect sample from the
-            victory of the managements that supplies best design system
-            guidelines ever.
+            Powered by The Afternoon Church, this portal is where interested students can apply for scholarship to their school of choice and all existing scholarship beneficiaries manage their account.  
           </Text>
           <Flex>
-            <Button variant="whiteButton" aria-label="Get Started">
-              Get Started
+            <Button className={styles.dash} variant="whiteButton" aria-label="go to dashboard">
+            <a style={{color: '#1b8a21', textDecoration:'none'}} href={`https://dashboard.${process.env.HOSTED_DOMAIN_NAME}/account/login`}>
+            Go to dashboard ↗
+            </a> 
             </Button>
             <>
               <ModalVideo
-                channel="youtube"
+                channel="custom"
+                url='https://web.facebook.com/1194608900/videos/1641225952897410/'
                 isOpen={videoOpen}
-                videoId="ZNA9rmDsYVE"
+                // videoId="ZNA9rmDsYVE"
                 onClose={() => setVideoOpen(false)}
               />
-              <Button
-                variant="textButton"
-                aria-label="Watch Video"
-                onClick={handleClick}
-              >
-                <FaPlayCircle /> Watch Video
-              </Button>
+             
             </>
           </Flex>
           <Flex sx={styles.sponsorBox}>
@@ -76,7 +59,7 @@ export default function Banner() {
             <Box sx={styles.sponsorBox.sponsor}>
               {data.map((item, index) => (
                 <Link path={item.path} key={`client-key${index}`}>
-                  <Image src={item.image} alt={item.title} />
+                  <Image src={item.image} width='100px' alt={item.title} />
                 </Link>
               ))}
             </Box>
@@ -84,7 +67,7 @@ export default function Banner() {
         </Box>
 
         <Box sx={styles.banner.imageBox}>
-          <Image src={BannerThumb} alt="banner" />
+          <Image src={BannerThumb} width='90%' alt="banner" />
         </Box>
       </Container>
     </section>
@@ -106,7 +89,7 @@ const styles = {
       display: 'flex',
     },
     contentBox: {
-      width: ['100%', null, '85%', '55%', '50%', '55%'],
+      width: ['100%', null, '85%', '95%', '50%', '55%'],
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'flex-start',
@@ -121,7 +104,7 @@ const styles = {
       mt: [0, null, null, '40px', 4, 7, 0],
       mb: [0, null, null, null, '-45px', '-70px', null, '-115px'],
       overflow: 'hidden',
-      textAlign: 'right',
+      textAlign: 'center',
       width: '100%',
     },
   },
@@ -134,8 +117,10 @@ const styles = {
     pb: [2, null, 0],
   },
   sponsorBox: {
+    display: 'flex',
     pt: ['35px', null, null, null, null, '45px'],
-    flexDirection: ['column', null, 'row'],
+    flexDirection: ['row'],
+    alignItems:'center',
     sponsor: {
       display: 'flex',
       alignItems: 'center',

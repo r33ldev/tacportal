@@ -3,7 +3,7 @@ import { StickyProvider } from "contexts/app/app.provider";
 import React, {useState} from "react";
 import Banner from "sections/banner";
 import Sticky from 'react-stickynode';
-import Header from '../components/header/header';
+import Header from '../components/header/header'
 import theme from "theme";
 import { ThemeProvider } from "theme-ui";
 

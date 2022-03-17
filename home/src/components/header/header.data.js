@@ -1,18 +1,18 @@
 export default [
   {
-    path: 'home',
-    label: 'Home',
+    path: "/",
+    label: "TAC Scholarship"
   },
   {
-    path: 'feature',
-    label: 'Features',
+    path: "https://theafternoonchurch.org",
+    label: "The Afternoon Church",
   },
   {
-    path: 'testimonial',
-    label: 'Testimonial',
+    path: "https://pastakachi.com",
+    label: "Past Akachi Nwoke",
   },
   {
-    path: 'pricing',
-    label: 'Pricing',
+    path: `https://support.${process.env.HOSTED_DOMAIN_NAME}`,
+    label: "Sponsor Us",
   },
 ];
