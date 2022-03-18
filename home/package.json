@@ -7,10 +7,10 @@
     "dev": "next dev",
     "build": "next build",
     "serve": "next start",
-    "export": "next export",
-    "postbuild": "next-sitemap"
+    "export": "next export"
   },
   "dependencies": {
+    "@next/env": "^12.1.0",
     "dotenv": "^16.0.0",
     "framer-motion": "^2.7.5",
     "globby": "^11.0.0",
@@ -35,7 +35,6 @@
   "devDependencies": {
     "imagemin-mozjpeg": "^9.0.0",
     "imagemin-optipng": "^8.0.0",
-    "imagemin-svgo": "^8.0.0",
-    "next-sitemap": "^1.2.4"
+    "imagemin-svgo": "^8.0.0"
   }
 }

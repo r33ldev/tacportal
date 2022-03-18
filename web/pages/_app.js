@@ -31,17 +31,15 @@ export default class MyApp extends App {
     let comment = document.createComment(`
 
 =========================================================
-* Notus NextJS - v1.1.0 based on Tailwind Starter Kit by Creative Tim
+* TAC Scholarship Portal Built by Dev Michael LLC
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/notus-nextjs
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/notus-nextjs/blob/main/LICENSE.md)
+* Proposed Product Page: https://tacscholarship.net
+* Copyright 2021 Dev Michael LLC (https://mikeadebisi.com)
+* Licensed under MIT (https://dev.mikeadebisi.com/licenses/MIT)
 
-* Tailwind Starter Kit Page: https://www.creative-tim.com/learning-lab/tailwind-starter-kit/presentation
 
-* Coded by Creative Tim
-
+* Coded by - Michael E Adebisi | Dev Michael LLC ~ mikeadebisi.com
 =========================================================
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
@@ -70,7 +68,7 @@ export default class MyApp extends App {
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
           />
-          <title>Notus NextJS by Creative Tim</title>
+          <title>The Afternoon Church scholarship portal</title>
           <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
         </Head>
         <Layout>
