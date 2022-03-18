@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Server and API for TAC Scholarship portal",
   "main": "index.js",
-  "author": "Dev Michael LLC",
+  "author": "Dev Michael LLC | https://mikeadebisi.com",
   "license": "MIT",
   "private": true,
   "scripts": {

@@ -1,10 +1,10 @@
 import { ApolloServer } from "apollo-server-express";
 import "dotenv/config";
 import express from "express";
-import morgan from "morgan";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
+import { Student } from './entities/Student';
 import { ContactResolver } from "./resolvers/contact";
 import { StudentResolver } from "./resolvers/student";
 import { SubscribeResolver } from "./resolvers/subscribe";
@@ -13,7 +13,7 @@ const main = async () => {
   // let conn = await createConnection();
    await createConnection();
   // await conn.runMigrations();
-  // await Student.delete({});
+  await Student.delete({});
   const app = express();
 
   const apolloServer = new ApolloServer({
@@ -28,8 +28,6 @@ const main = async () => {
   apolloServer.applyMiddleware({ app });
 
   // development logging
-  app.use(morgan("dev"));
-
   app.get("/", (_, res) => {
     res.status(200).send("Welcome to the home page");
   });

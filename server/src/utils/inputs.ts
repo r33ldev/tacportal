@@ -51,7 +51,7 @@ export class EnrolInputsOne {
 @InputType()
 export class EnrolInputsTwo {
   @Field({ nullable: true })
-  schoolName?: string;
+  studentSchool?: string;
 
   @Field({ nullable: true })
   courseName?: string;

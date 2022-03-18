@@ -109,7 +109,8 @@ export class Student extends BaseEntity {
   username?: string;
 
   @Field()
-  password?: string;
+  @Column()
+  password: string;
 
   @Field(() => String)
   @CreateDateColumn()

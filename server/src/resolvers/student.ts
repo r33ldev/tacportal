@@ -1,10 +1,11 @@
+import { AllContext } from './../../types';
 import { LoginInput } from "./../utils/inputs";
 import {
   EnrolInputsOne,
   EnrolInputsTwo,
   EnrolInputsThree,
 } from "../utils/inputs";
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
 // import { v4 } from 'uuid';
 import argon2 from "argon2";
 import { getConnection } from "typeorm";
@@ -73,10 +74,11 @@ export class StudentResolver {
     return { student };
   }
 
-  @Mutation(() => StudentResponse, { nullable: true })
+  @Mutation(() => StudentResponse)
   async login(
-    @Arg("options") options: LoginInput
-  ): Promise<StudentResponse | null> {
+    @Arg("options") options: LoginInput,
+    @Ctx() {req}: AllContext
+  ): Promise<StudentResponse > {
     const student = await Student.findOne(
       options.usernameOrEmail.includes("@")
         ? { where: { email: options.usernameOrEmail } }
@@ -92,7 +94,8 @@ export class StudentResolver {
         ],
       };
     }
-    const valid = await argon2.verify(student.password as string, options.password);
+
+    const valid = await argon2.verify(student.password, options.password);
     if (!valid) {
       return {
         errors: [
@@ -103,6 +106,7 @@ export class StudentResolver {
         ],
       };
     }
+    req.session.studentId = student.id
     return { student };
 
 
