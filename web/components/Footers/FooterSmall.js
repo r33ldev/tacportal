@@ -28,7 +28,7 @@ export default function FooterSmall(props) {
               <ul className="flex flex-wrap list-none md:justify-end  justify-center">
                 <li>
                   <a
-                    href="https://gitub.com/devmikellc"
+                    href="https:mikeadebisi.com"
                     className="text-white hover:text-blueGray-300 text-sm font-semibold block py-1 px-3"
                   >
                    Dev Michael LLC

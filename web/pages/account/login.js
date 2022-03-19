@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+import { useRouter } from 'next/router';
 import Link from "next/link";
 import { Formik, Form } from "formik";
 import { useLoginMutation } from '../../generated/graphql.js'
 // layout for page
 
 import Auth from "layouts/Auth.js";
+import { InputField } from 'components/Utils/InputField.js';
+import { toErrorMap } from 'components/Utils/ToErrorMap.js';
 
 export default function Login() {
-
+  const router = useRouter()
+  const [usernameOrEmail, setUsernameOrEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [usernameError, setUsernameError] = useState(false)
+  const [pwdError, setPwdError] = useState(false)
   const [login] = useLoginMutation()
   return (
     <>
@@ -43,7 +50,33 @@ export default function Login() {
                 <div className="text-blueGray-400 text-center mb-3 font-bold">
                   <small>Or sign in with credentials</small>
                 </div>
-                <Formik>
+                <Formik
+                  initialValues={{ usernameOrEmail, password }}
+                  enableReinitialize
+                  onSubmit={async (values, { setErrors }) => {
+                    setPwdError(false)
+                    setUsernameError(false)
+                    const response = await login({
+                      variables: { options: values }
+                    })
+                    let errors
+                    if (response?.data?.login.errors) {
+                      errors = toErrorMap(response.data.login.errors)
+                      if ('usernameOrEmail' in errors) {
+                        setUsernameError(true)
+                      } else if ('password' in errors) {
+                        setPwdError(true)
+                      }
+                    } else if (response?.data?.login.student) {
+                      if (typeof router.query.next === "string") {
+                        router.push(router.query.next);
+                      } else {
+                        // worked
+                        router.push("/");
+                      }
+                    }
+                  }}
+                >
                   {({ isSubmitting }) => (
                     <Form  >
 
@@ -54,11 +87,17 @@ export default function Login() {
                         >
                           Email or Username
                         </label>
-                        <input
-                          type="email"
+                        <InputField
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                           placeholder="Username"
+                          required
+                          name='usernameOrEmail'
+                          onChange={e => setUsernameOrEmail(e.target.value)}
                         />
+                        {usernameError && <p className='text-red-500 text-sm mt-2'>
+                          This username or email cannot be found {'  '}
+                          <i className='text-red-500  fas fa-exclamation ' />
+                        </p>}
                       </div>
 
                       <div className="relative w-full mb-3">
@@ -68,11 +107,17 @@ export default function Login() {
                         >
                           Password
                         </label>
-                        <input
-                          type="password"
+                        <InputField
+                          type="password" required
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                           placeholder="Password"
+                          name='password'
+                          onChange={e => setPassword(e.target.value)}
                         />
+                        {pwdError && <p className='text-red-500 text-sm mt-2'>
+                          Check your password and try again {'  '}
+                          <i className='text-red-500  fas fa-exclamation ' />
+                        </p>}
                       </div>
                       <div>
                         <label className="inline-flex items-center cursor-pointer">
@@ -90,7 +135,7 @@ export default function Login() {
                       <div className="text-center mt-6">
                         <button
                           className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                          type="button"
+                          type="submit"
                         >
                           Sign In
                         </button>
@@ -103,20 +148,22 @@ export default function Login() {
             </div>
             <div className="flex flex-wrap mt-6 relative">
               <div className="w-1/2">
+
                 <a
-                  href={`https://dashboard.${process.env.HOSTED_DOMAIN_NAME}/account/forget-password`}
+                  href='/account/forget-password'
                   onClick={(e) => e.preventDefault()}
                   className="text-blueGray-200"
                 >
                   <small>Forgot password?</small>
                 </a>
+
               </div>
               <div className="w-1/2 text-right">
-                <Link href="/auth/register">
-                  <a href={`https://dashboard.${process.env.HOSTED_DOMAIN_NAME}/account/enrol`} className="text-blueGray-200">
-                    <small>New here? click to enrol</small>
-                  </a>
-                </Link>
+
+                <a href='/account/enrol' className="text-blueGray-200">
+                  <small>New here? click to enrol</small>
+                </a>
+
               </div>
             </div>
           </div>
