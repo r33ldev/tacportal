@@ -105,7 +105,7 @@ export class Student extends BaseEntity {
   active?: boolean;
 
   @Field()
-  @Column({})
+  @Column({nullable: false, unique: true})
   username?: string;
 
   @Field()

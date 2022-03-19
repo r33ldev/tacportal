@@ -1,22 +1,22 @@
-import { AllContext } from './../../types';
-import { LoginInput } from "./../utils/inputs";
+import { AllContext } from '../types/types';
+import { LoginInput } from './../utils/inputs';
 import {
   EnrolInputsOne,
   EnrolInputsTwo,
   EnrolInputsThree,
-} from "../utils/inputs";
-import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
+} from '../utils/inputs';
+import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 // import { v4 } from 'uuid';
-import argon2 from "argon2";
-import { getConnection } from "typeorm";
-import randomString from "randomstring";
-import { Student } from "../entities/Student";
-import { StudentResponse } from "../utils/response";
+import argon2 from 'argon2';
+import { getConnection } from 'typeorm';
+import randomString from 'randomstring';
+import { Student } from '../entities/Student';
+import { StudentResponse } from '../utils/response';
 import {
   validateEnrolInputsOne,
   validateEnrolInputsThree,
   validateEnrolInputsTwo,
-} from "../utils/validateEnrolInputs";
+} from '../utils/validateEnrolInputs';
 // import { Payment } from 'src/entities/Payment';
 
 @Resolver()
@@ -29,9 +29,9 @@ export class StudentResolver {
 
   @Mutation(() => StudentResponse, { nullable: true })
   async enrol(
-    @Arg("optionsOne") optionsOne: EnrolInputsOne,
-    @Arg("optionsTwo") optionsTwo: EnrolInputsTwo,
-    @Arg("optionsThree") optionsThree: EnrolInputsThree
+    @Arg('optionsOne') optionsOne: EnrolInputsOne,
+    @Arg('optionsTwo') optionsTwo: EnrolInputsTwo,
+    @Arg('optionsThree') optionsThree: EnrolInputsThree
   ): Promise<StudentResponse | null> {
     // This code blocks only validate emptiness... more logic at the last validator
     const errorsOne = validateEnrolInputsOne(optionsOne);
@@ -52,7 +52,7 @@ export class StudentResolver {
     }
 
     const hashedPassword = await argon2.hash(optionsThree.password);
-    let uniqueId = randomString.generate(15);
+    let uniqueId = randomString.generate(15).toLocaleLowerCase();
     let student;
     try {
       const result = await getConnection()
@@ -65,31 +65,32 @@ export class StudentResolver {
           password: hashedPassword,
           username: optionsThree.username,
         })
-        .returning("*")
+        .returning('*')
         .execute();
       student = result.raw[0];
     } catch (err) {
-      console.log("error in creating student account: ", err);
+      console.log('error in creating student account: ', err);
     }
     return { student };
   }
 
   @Mutation(() => StudentResponse)
   async login(
-    @Arg("options") options: LoginInput,
-    @Ctx() {req}: AllContext
-  ): Promise<StudentResponse > {
+    @Arg('options') options: LoginInput,
+    @Ctx() { req }: AllContext
+  ): Promise<StudentResponse> {
     const student = await Student.findOne(
-      options.usernameOrEmail.includes("@")
+      options.usernameOrEmail.includes('@')
         ? { where: { email: options.usernameOrEmail } }
         : { where: { username: options.usernameOrEmail } }
     );
+
     if (!student) {
       return {
         errors: [
           {
-            field: "usernameOrEmail",
-            message: "That username does not exist",
+            field: 'usernameOrEmail',
+            message: 'That username does not exist',
           },
         ],
       };
@@ -100,15 +101,17 @@ export class StudentResolver {
       return {
         errors: [
           {
-            field: "password",
-            message: "Password not correct",
+            field: 'password',
+            message: 'Password not correct',
           },
         ],
       };
     }
-    req.session.studentId = student.id
+    // console.log('request session: ', req.session);
+    req.session.studentId = student.uniqueId;
+    console.log('request session: ', req.session);
+
+    
     return { student };
-
-
   }
 }

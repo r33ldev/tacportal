@@ -1,0 +1,9 @@
+fragment StudentResponse on StudentResponse {
+    errors {
+        field 
+        message
+    }
+    student {
+        ...MiniStudentResponse
+    }
+}

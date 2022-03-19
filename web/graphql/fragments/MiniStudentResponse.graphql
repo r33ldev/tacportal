@@ -1,0 +1,8 @@
+fragment MiniStudentResponse on Student {
+  id
+  uniqueId
+  email
+  createdAt
+  username
+  active
+}

@@ -1,13 +1,17 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import {
+  ApolloClient, ApolloProvider, InMemoryCache
+} from "@apollo/client";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import PageChange from "components/PageChange/PageChange.js";
 import App from "next/app";
 import Head from "next/head";
 import Router from "next/router";
-
-import PageChange from "components/PageChange/PageChange.js";
-
-import "@fortawesome/fontawesome-free/css/all.min.css";
+import React from "react";
+import ReactDOM from "react-dom";
 import "styles/tailwind.css";
+
+
+
 
 Router.events.on("routeChangeStart", (url) => {
   console.log(`Loading: ${url}`);
@@ -31,7 +35,7 @@ export default class MyApp extends App {
     let comment = document.createComment(`
 
 =========================================================
-* TAC Scholarship Portal Built by Dev Michael LLC
+* TAC Scholarship Portal Built by Dev Michael LLC (https://mikeadebisi.com)
 =========================================================
 
 * Proposed Product Page: https://tacscholarship.net
@@ -60,21 +64,28 @@ export default class MyApp extends App {
     const { Component, pageProps } = this.props;
 
     const Layout = Component.layout || (({ children }) => <>{children}</>);
-
+    const client = new ApolloClient({
+      uri: 'http://localhost:5000/graphql',
+      cache: new InMemoryCache()
+    });
     return (
-      <React.Fragment>
-        <Head>
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-          />
-          <title>The Afternoon Church scholarship portal</title>
-          <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-        </Head>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </React.Fragment>
+      <ApolloProvider client={client}>
+
+        <React.Fragment>
+          <Head>
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1, shrink-to-fit=no"
+            />
+            <title>The Afternoon Church scholarship portal</title>
+            <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+          </Head>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </React.Fragment>
+      </ApolloProvider>
+
     );
   }
 }

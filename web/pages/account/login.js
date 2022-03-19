@@ -1,14 +1,14 @@
 import React from "react";
 import Link from "next/link";
 import { Formik, Form } from "formik";
+import { useLoginMutation } from '../../generated/graphql.js'
 // layout for page
 
 import Auth from "layouts/Auth.js";
 
 export default function Login() {
-  function handleSubmit(e) {
-    e.preventDefault()
-  }
+
+  const [login] = useLoginMutation()
   return (
     <>
       <div className="container mx-auto px-4 h-full">
@@ -45,7 +45,7 @@ export default function Login() {
                 </div>
                 <Formik>
                   {({ isSubmitting }) => (
-                    <Form onSubmit={handleSubmit} >
+                    <Form  >
 
                       <div className="relative w-full mb-3">
                         <label
